@@ -20,22 +20,14 @@ class CustomObject:
 
     def serialize(self, filename):
         """serialize method"""
-        data = {"Name": self.name,
-                "Age": self.age,
-                "Is Student": self.is_student
-                }
         with open(filename, 'wb') as f:
-            pickle.dump(data, f)
+            pickle.dump(self, f)
 
     @classmethod
     def deserialize(self, filename):
         """deserialize method"""
         file_path = Path(filename)
-        if file_path.is_file:
+        if file_path.is_file():
             with open(filename, "rb") as f:
-                data = pickle.load(f)
-            name = data["Name"]
-            age = data["Age"]
-            is_student = data["Is Student"]
-            return CustomObject(name, age, is_student)
+                return pickle.load(f)
         return None
