@@ -2,7 +2,6 @@
 """pickle serialization"""
 
 import pickle
-from pathlib import Path
 
 
 class CustomObject:
@@ -20,14 +19,17 @@ class CustomObject:
 
     def serialize(self, filename):
         """serialize method"""
-        with open(filename, 'wb') as f:
-            pickle.dump(self, f)
+        try:
+            with open(filename, 'wb') as f:
+                pickle.dump(self, f)
+        except (OSError, pickle.PicklingError):
+            return None
 
     @classmethod
     def deserialize(self, filename):
         """deserialize method"""
-        file_path = Path(filename)
-        if file_path.is_file():
+        try:
             with open(filename, "rb") as f:
                 return pickle.load(f)
-        return None
+        except (OSError, EOFError, pickle.UnpicklingError):
+            return None
