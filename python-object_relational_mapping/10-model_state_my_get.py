@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     all_states = session.query(State).filter(
         State.name == sys.argv[4]).order_by(State.id).all()
-    if all_states is None:
+    if not all_states:
         print("Not found")
     else:
         for state in all_states:
