@@ -23,6 +23,6 @@ if __name__ == "__main__":
         print("Not found")
     else:
         for state in all_states:
-            print(f"{state.id}: {state.name}")
+            print(f"{state.id}")
 
     session.close()
