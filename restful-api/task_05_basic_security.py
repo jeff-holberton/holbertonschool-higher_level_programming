@@ -34,6 +34,11 @@ def handle_missing_token(err):
     return jsonify({"error": "Invalid token"}), 401
 
 
+@jwt.invalid_token_loader
+def handle_invalid_token(err):
+    return jsonify({"error": "Invalid token"}), 401
+
+
 @auth.verify_password
 def verify_password(username, password):
     if username in users and \
