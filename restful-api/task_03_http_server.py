@@ -36,8 +36,8 @@ class MyServer(BaseHTTPRequestHandler):
             content_type = "application/json"
         else:
             status_code = 404
-            content_type = "text/html; charset=utf-8"
-            body = b"<h1>404 Not Found</h1>"
+            content_type = "text/plain; charset=utf-8"
+            body = b"Endpoint not found"
 
         content_length = len(body)
         self.send_response(status_code)
