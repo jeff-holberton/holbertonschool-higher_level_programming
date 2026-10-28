@@ -20,7 +20,7 @@ def data():
 
 @app.route("/status")
 def status():
-    return "<p>OK<p>"
+    return "OK"
 
 
 @app.route("/users/<username>")
@@ -34,7 +34,7 @@ def get_username(username):
 
 @app.post("/add_user")
 def add_user():
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if data is None:
         return jsonify({"error": "Invalid JSON"}), 400
@@ -45,3 +45,6 @@ def add_user():
 
     users[data["username"]] = data
     return jsonify({"message": "User added", "user": data}), 201
+
+if __name__ == "__main__":
+    app.run()
