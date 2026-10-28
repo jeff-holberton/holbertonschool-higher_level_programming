@@ -31,7 +31,7 @@ users = {
 
 @jwt.unauthorized_loader
 def handle_missing_token(err):
-    return 401
+    return jsonify({"error": "Invalid token"}), 401
 
 
 @auth.verify_password
@@ -41,7 +41,7 @@ def verify_password(username, password):
         return username
 
 
-@app.route("/")
+@app.route("/basic-protected")
 @auth.login_required
 def home():
     return "Basic Auth: Access Granted"
@@ -49,12 +49,16 @@ def home():
 
 @app.post("/login")
 def login():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    username = data.get("username")
+    password = data.get("password")
 
     user = users.get(username)
     if user is None or \
-            check_password_hash(user["password"]) != password:
+            check_password_hash(user["password"], password) != password:
         return jsonify({"error": "Invalid credentials"}), 401
 
     token = create_access_token(identity=username)
@@ -68,7 +72,7 @@ def jwt_protected():
 
 
 @app.route("/admin-only")
-@jwt_required
+@jwt_required()
 def admin_only():
     current_user = get_jwt_identity()
 
