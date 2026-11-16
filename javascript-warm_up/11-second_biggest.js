@@ -1,17 +1,19 @@
 #!/usr/bin/node
 
-const args = process.argv.slice(2);
+const nums = process.argv.slice(2).map(Number);
 
-if (args.length <= 1) {
+if (nums.length <= 1) {
   console.log(0);
 } else {
-  let biggest = args[0];
-  let secondBiggest = biggest;
+  let biggest = nums[0];
+  let secondBiggest = -Infinity;
 
-  for (let i = 1; i < args.length; i++) {
-    if (args[i] > biggest) {
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > biggest) {
       secondBiggest = biggest;
-      biggest = args[i];
+      biggest = nums[i];
+    } else if (nums[i] > secondBiggest && nums[i] < biggest) {
+      secondBiggest = nums[i];
     }
   }
 
