@@ -2,7 +2,8 @@
 
 const args = process.argv.slice(2);
 
-if (args.length === 0) {
+const isEmpty = (args) => args[Symbol.iterator]().next().done;
+if (isEmpty(args)) {
   console.log('No argument');
 } else {
   console.log(args[0]);
