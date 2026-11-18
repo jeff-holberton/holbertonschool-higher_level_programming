@@ -31,13 +31,15 @@ def generate_invitations(template, attendees):
         return
 
     invitations = []
+    placeholders = ["name", "event_title", "event_date", "event_location"]
 
     for attendee in attendees:
         invitation = template
-        for template_key, data in attendee.items():
+        for template_key in placeholders:
+            data = attendee.get(template_key)
             if data is None:
-                data = "'N/A'"
-            invitation = invitation.replace("{" + template_key + "}", data)
+                data = "N/A"
+            invitation = invitation.replace("{" + template_key + "}", str(data))
         invitations.append(invitation)
 
     i = 1
