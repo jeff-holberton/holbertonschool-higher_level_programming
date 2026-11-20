@@ -21,7 +21,7 @@ def items():
 	try:
 		with open("items.json", "r", encoding="utf-8") as file:
 			data = json.load(file)
-			items = data["items"]
+			items = data.get("items", [])
 	except FileNotFoundError:
 		items = []
 	return render_template("items.html", items=items)
