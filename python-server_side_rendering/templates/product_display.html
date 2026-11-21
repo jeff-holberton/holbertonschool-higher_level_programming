@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>My Flask App</title>
+</head>
+<body>
+	{% include 'header.html' %}
+	{% if error != "" %}
+		<p>{{ error }}</p>
+	{% else %}
+		<h1>Product Display</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Category</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}
+					<tr>
+						{% for item in product %}
+						<td>{{ item }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+	{% include 'footer.html' %}
+</body>
+</html>
